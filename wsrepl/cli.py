@@ -23,7 +23,9 @@ parser.add_argument('-O', '--origin',             type=str,                     
 parser.add_argument('-F', '--headers-file',       type=str,                                     help='Additional headers file (e.g. "headers.txt")')
 parser.add_argument(      '--no-native-ping',               action='store_true', default=False, help='Disable native ping/pong messages')
 parser.add_argument(      '--ping-interval',      type=int,                      default=24,    help='Ping interval (seconds)')
-parser.add_argument(      '--hide-ping-pong',               action='store_true', default=False, help='Hide ping/pong messages')
+parser.add_argument(      '--show-ping-pong',               action='store_true', default=False, help='Hide ping/pong messages')
+# Leave around for backwards compatibility
+parser.add_argument(      '--hide-ping-pong',               action='store_true', default=False, help='argparse.SUPPRESS')
 parser.add_argument(      '--ping-0x1-interval',  type=int,                      default=24,    help='Fake ping (0x1 opcode) interval (seconds)')
 parser.add_argument(      '--ping-0x1-payload',   type=str,                                     help='Fake ping (0x1 opcode) payload')
 parser.add_argument(      '--pong-0x1-payload',   type=str,                                     help='Fake pong (0x1 opcode) payload')
@@ -61,7 +63,7 @@ def cli():
         headers=args.header if isinstance(args.header, list) else [args.header] if args.header else [],
         headers_file=args.headers_file,
         ping_interval=args.ping_interval,
-        hide_ping_pong=args.hide_ping_pong,
+        hide_ping_pong=not args.show_ping_pong,
         ping_0x1_interval=args.ping_0x1_interval,
         ping_0x1_payload=args.ping_0x1_payload,
         pong_0x1_payload=args.pong_0x1_payload,
