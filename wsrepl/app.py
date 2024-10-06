@@ -2,6 +2,7 @@ import asyncio
 import inspect
 import logging
 
+import rich.highlighter
 from textual import events, on
 from textual.app import App, ComposeResult
 from textual.logging import TextualHandler
@@ -81,7 +82,7 @@ class WSRepl(App):
     def compose(self) -> ComposeResult:
         """Compose the Textual app layout."""
         self.history = History(self.small)
-        self.input_widget = Input(placeholder="Enter websocket message", disabled=True)
+        self.input_widget = Input(placeholder="Enter websocket message", disabled=True, highlighter=rich.highlighter.JSONHighlighter())
 
         classes = ["app"]
         if self.small:
@@ -92,6 +93,9 @@ class WSRepl(App):
     async def on_input_submitted(self, event) -> None:
         await self.message_handler.send_str(event.value)
         self.input_widget.value = ''
+
+    def on_copy_button_copied(self, event) -> None:
+        self.input_widget.value = event.message._long
 
     def disable_input(self) -> None:
         """Disable the input widget."""
