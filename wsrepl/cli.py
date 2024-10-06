@@ -25,7 +25,7 @@ parser.add_argument(      '--no-native-ping',               action='store_true',
 parser.add_argument(      '--ping-interval',      type=int,                      default=24,    help='Ping interval (seconds)')
 parser.add_argument(      '--show-ping-pong',               action='store_true', default=False, help='Hide ping/pong messages')
 # Leave around for backwards compatibility
-parser.add_argument(      '--hide-ping-pong',               action='store_true', default=False, help='argparse.SUPPRESS')
+parser.add_argument(      '--hide-ping-pong',               action='store_true', default=False, help=argparse.SUPPRESS)
 parser.add_argument(      '--ping-0x1-interval',  type=int,                      default=24,    help='Fake ping (0x1 opcode) interval (seconds)')
 parser.add_argument(      '--ping-0x1-payload',   type=str,                                     help='Fake ping (0x1 opcode) payload')
 parser.add_argument(      '--pong-0x1-payload',   type=str,                                     help='Fake pong (0x1 opcode) payload')
